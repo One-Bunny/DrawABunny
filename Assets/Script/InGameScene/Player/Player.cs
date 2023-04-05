@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Spine.Unity;
 
 namespace OneBunny
 {
@@ -8,8 +9,10 @@ namespace OneBunny
     {
         [field:SerializeField] public Rigidbody2D playerRigidbody { get; private set;}
         public PlayerStatusData playerStatusData;
-        public bool isGrounded { get; private set; } /*= false;*/
+        public bool isGrounded { get; private set; }
         private bool formerIsGrounded;
+
+        public SkeletonAnimation playerSkeletonAnimation;
         public enum States : int
         {
             Start,

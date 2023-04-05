@@ -25,9 +25,10 @@ namespace OneBunny
 
             var velocity = Vector2.zero;
             velocity.x = playerMovement.x * runnerEntity.playerStatusData.moveSpeed;
-            velocity.y = runnerEntity.playerStatusData.jumpPower*0.8f;
+            velocity.y = runnerEntity.playerStatusData.jumpPower;
 
             runnerEntity.playerRigidbody.velocity = velocity;
+            runnerEntity.playerSkeletonAnimation.AnimationState.SetAnimation(0, "p_Jump_animation", false);
         }
 
         public override void FixedUpdateState()
@@ -43,6 +44,9 @@ namespace OneBunny
             }
 
             runnerEntity.playerRigidbody.velocity = velocity;
+
+            runnerEntity.playerSkeletonAnimation.skeleton.ScaleX
+                = playerMovement.x < 0 ? -1f : 1f;
         }
 
         public override void ExitState()

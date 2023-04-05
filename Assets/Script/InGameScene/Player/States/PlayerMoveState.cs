@@ -20,10 +20,10 @@ namespace OneBunny
 
         public override void BeginState()
         {
+            runnerEntity.SetAction(Player.ButtonActions.Jump, OnJump);
             runnerEntity.OnMove = (x) => playerMovement = x;
 
-            //var velocity = runnerEntity.playerRigidbody.velocity;
-            //velocity.x = playerMovement.x * runnerEntity.playerStatusData.moveSpeed;
+            runnerEntity.playerSkeletonAnimation.AnimationState.SetAnimation(0, "P_Move_Animation", true);
         }
 
         public override void UpdateState()
@@ -43,6 +43,9 @@ namespace OneBunny
             velocity.y = runnerEntity.playerRigidbody.velocity.y;
 
             runnerEntity.playerRigidbody.velocity = velocity;
+
+            runnerEntity.playerSkeletonAnimation.skeleton.ScaleX 
+                = playerMovement.x < 0 ? -1f : 1f;
         }
 
         public override void ExitState()

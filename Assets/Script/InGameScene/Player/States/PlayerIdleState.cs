@@ -22,6 +22,8 @@ namespace OneBunny
             runnerEntity.SetAction(Player.ButtonActions.Jump, OnJump);
 
             runnerEntity.OnMove = (x) => playerMovement = x;
+
+            runnerEntity.playerSkeletonAnimation.AnimationState.SetAnimation(0, "P_Default_Animastion", true);
         }
 
         public override void UpdateState()
