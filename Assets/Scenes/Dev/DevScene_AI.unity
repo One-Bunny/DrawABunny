@@ -238,6 +238,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   csvFiles:
   - {fileID: 4900000, guid: 777f1956fd91c174498d15d9c51e5cb9, type: 3}
+  - {fileID: 4900000, guid: f66ad1b77c8100e4d9d159f7ca1eb2f9, type: 3}
+  - {fileID: 4900000, guid: 7f5df86f04a9b2a4d8e8488c43b6b7d9, type: 3}
 --- !u!4 &874094074
 Transform:
   m_ObjectHideFlags: 0
