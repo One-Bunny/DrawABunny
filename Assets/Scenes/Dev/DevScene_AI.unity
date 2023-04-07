@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 874094074}
   - component: {fileID: 874094073}
   m_Layer: 0
-  m_Name: CSVDataLogger
+  m_Name: CSVConverter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -236,12 +236,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bf11e327f5a5104fa85411bb5e509ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  csvFile: {fileID: 4900000, guid: 777f1956fd91c174498d15d9c51e5cb9, type: 3}
   csvFiles:
   - {fileID: 4900000, guid: 777f1956fd91c174498d15d9c51e5cb9, type: 3}
-  - {fileID: 4900000, guid: b28f5e6157a27954da0b5b1a11f84e43, type: 3}
-  - {fileID: 4900000, guid: dee86c0b11d142f4a8911f90f533efe8, type: 3}
-  - {fileID: 4900000, guid: 6deef45e0da43e941a9eb8fe85bdab08, type: 3}
 --- !u!4 &874094074
 Transform:
   m_ObjectHideFlags: 0

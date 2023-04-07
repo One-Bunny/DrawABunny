@@ -1,58 +1,35 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 public class CSVToJson : MonoBehaviour
 {
-    public TextAsset csvFile;
     public List<TextAsset> csvFiles;
+    private string _csvToJsonFilePath;
 
-    private string csvToJsonFilePath;
+    private List<string> _jsons = new();
+    private List<string> _jsonNames = new();
 
     private void Start()
     {
-        ConvertMultipleCSVToJson();
+        if (csvFiles.Count == 0)
+        {
+            return;
+        }
+
+        ConvertCSVToJson();
+        JsonToScriptableObject();
     }
 
     private void ConvertCSVToJson()
     {
-        csvToJsonFilePath = Application.dataPath + "/Data/CSVToJsonData/" + csvFile.name + ".json";
-        string[] csvData = csvFile.text.Split(new[] { "\r\n", "\n" }, System.StringSplitOptions.None);
-
-        // 키 값: CSV파일의 첫 줄
-        string[] keys = csvData[0].Split(',');
-        var records = new List<Dictionary<string, string>>();
-
-        // 마지막 줄이 빈 줄인 경우 배열 크기 -1
-        int rowCount = csvData.Length - (csvData[^1] == "" ? 1 : 0);
-
-        for (int i = 1; i < rowCount; i++)
-        {
-            string[] values = csvData[i].Split(',');
-
-            var record = new Dictionary<string, string>();
-
-            for (int j = 0; j < keys.Length; j++)
-            {
-                record[keys[j]] = values[j];
-            }
-
-            records.Add(record);
-        }
-
-        string json = JsonConvert.SerializeObject(records, Formatting.Indented);
-
-        File.WriteAllText(csvToJsonFilePath, json);
-    }
-
-    private void ConvertMultipleCSVToJson()
-    {
-
         for (int i = 0; i < csvFiles.Count; i++)
         {
-            csvToJsonFilePath = Application.dataPath + "/Data/CSVToJsonData/" + csvFiles[i].name + ".json";
-
+            _csvToJsonFilePath = Application.dataPath + "/Data/CSVToJsonData/" + csvFiles[i].name + ".json";
+            _jsonNames.Add(csvFiles[i].name);
             string[] csvData = csvFiles[i].text.Split(new[] { "\r\n", "\n" }, System.StringSplitOptions.None);
             string[] keys = csvData[0].Split(',');
 
@@ -75,8 +52,38 @@ public class CSVToJson : MonoBehaviour
             }
 
             string json = JsonConvert.SerializeObject(records, Formatting.Indented);
+            _jsons.Add(json);
 
-            File.WriteAllText(csvToJsonFilePath, json);
+            File.WriteAllText(_csvToJsonFilePath, json);
+        }
+    }
+
+    private void JsonToScriptableObject()
+    {
+
+        for (int i = 0; i < _jsons.Count; i++)
+        {
+            string json = _jsons[i];
+            JsonData jsonData = new JsonData();
+
+            JArray jArray = JArray.Parse(json);
+
+            for (int j=0; j<jArray.Count; j++)
+            {
+                JObject jObject = jArray[j] as JObject;
+                JsonDataEntity jsonDataEntity = new();
+
+                jsonDataEntity.index = (int)jObject["Index"];
+                jsonDataEntity.name = jObject["Name"].ToString();
+                jsonDataEntity.log = jObject["Log"].ToString();
+
+                Debug.Log(jObject);
+
+                jsonData.entities.Add(jsonDataEntity);
+            }
+
+            AssetDatabase.CreateAsset(jsonData, "Assets/Data/JsonData/"+_jsonNames[i]+".asset");
+            AssetDatabase.SaveAssets();
         }
     }
 }
