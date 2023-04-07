@@ -222,9 +222,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7f447690510da44d9930f433a99ff78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <playerRigidbody>k__BackingField: {fileID: 272913213}
-  playerStatusData: {fileID: 11400000, guid: 93d98c8c0baa0a64e82597f5c66d9610, type: 2}
-  playerSkeletonAnimation: {fileID: 1301426110}
+  <rigidbody>k__BackingField: {fileID: 272913213}
+  statusData: {fileID: 0}
+  skeletonAnimation: {fileID: 0}
 --- !u!70 &272913217
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

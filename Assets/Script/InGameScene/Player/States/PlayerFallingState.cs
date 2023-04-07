@@ -15,19 +15,17 @@ namespace OneBunny
 
         #endregion
 
-        private bool _isFalling = false;
-
-        private Vector2 playerMovement;
+        private Vector2 movement;
 
         public override void BeginState()
         {
-            runnerEntity.OnMove = (x) => playerMovement = x;
+            runnerEntity.OnMove = (x) => movement = x;
 
             var velocity = Vector2.zero;
-            velocity.x = playerMovement.x * runnerEntity.playerStatusData.moveSpeed;
-            velocity.y = runnerEntity.playerRigidbody.velocity.y;
-            runnerEntity.playerRigidbody.velocity = velocity;
-            runnerEntity.playerSkeletonAnimation.AnimationState.SetAnimation(0, "p_fall_animation", false);
+            velocity.x = movement.x * runnerEntity.statusData.moveSpeed;
+            velocity.y = runnerEntity.rigidbody.velocity.y;
+            runnerEntity.rigidbody.velocity = velocity;
+            runnerEntity.skeletonAnimation.AnimationState.SetAnimation(0, runnerEntity.fallingAnimationName, false);
         }
 
         public override void FixedUpdateState()
@@ -39,13 +37,13 @@ namespace OneBunny
 
             var velocity = Vector2.zero;
 
-            velocity.x = playerMovement.x * runnerEntity.playerStatusData.moveSpeed;
-            velocity.y = runnerEntity.playerRigidbody.velocity.y*1.1f;
+            velocity.x = movement.x * runnerEntity.statusData.moveSpeed;
+            velocity.y = runnerEntity.rigidbody.velocity.y*1.1f;
 
-            runnerEntity.playerRigidbody.velocity = velocity;
+            runnerEntity.rigidbody.velocity = velocity;
 
-            runnerEntity.playerSkeletonAnimation.skeleton.ScaleX 
-                = playerMovement.x < 0 ? -1f : 1f;
+            runnerEntity.skeletonAnimation.skeleton.ScaleX 
+                = movement.x < 0 ? -1f : 1f;
         }
 
         public override void ExitState()

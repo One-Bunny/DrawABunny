@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace OneBunny
@@ -15,38 +13,35 @@ namespace OneBunny
 
         #endregion
 
-        private bool _isFalling = false;
-
-        private Vector2 playerMovement;
+        private Vector2 _movement;
+        private Vector2 velocity;
 
         public override void BeginState()
         {
-            runnerEntity.OnMove = (x) => playerMovement = x;
+            runnerEntity.OnMove = (x) => _movement = x;
 
-            var velocity = Vector2.zero;
-            velocity.x = playerMovement.x * runnerEntity.playerStatusData.moveSpeed;
-            velocity.y = runnerEntity.playerStatusData.jumpPower;
+            velocity = Vector2.zero;
+            velocity.x = _movement.x * runnerEntity.statusData.moveSpeed;
+            velocity.y = runnerEntity.statusData.jumpPower;
 
-            runnerEntity.playerRigidbody.velocity = velocity;
-            runnerEntity.playerSkeletonAnimation.AnimationState.SetAnimation(0, "p_Jump_animation", false);
+            runnerEntity.rigidbody.velocity = velocity;
+            runnerEntity.skeletonAnimation.AnimationState.SetAnimation(0, runnerEntity.jumpAnimationName, false);
         }
 
         public override void FixedUpdateState()
         {
-            var velocity = Vector2.zero;
+            velocity.x = _movement.x * runnerEntity.statusData.moveSpeed;
+            velocity.y = runnerEntity.rigidbody.velocity.y;
 
-            velocity.x = playerMovement.x * runnerEntity.playerStatusData.moveSpeed;
-            velocity.y = runnerEntity.playerRigidbody.velocity.y;
-
-            if(runnerEntity.playerRigidbody.velocity.y<=0)
+            if (runnerEntity.rigidbody.velocity.y <= 0)
             {
                 runnerEntity.ChangeState(Player.States.Falling);
             }
 
-            runnerEntity.playerRigidbody.velocity = velocity;
+            runnerEntity.rigidbody.velocity = velocity;
 
-            runnerEntity.playerSkeletonAnimation.skeleton.ScaleX
-                = playerMovement.x < 0 ? -1f : 1f;
+            runnerEntity.skeletonAnimation.skeleton.ScaleX
+                = _movement.x < 0 ? -1f : 1f;
         }
 
         public override void ExitState()

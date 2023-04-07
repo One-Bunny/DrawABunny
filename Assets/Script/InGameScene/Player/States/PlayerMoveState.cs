@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace OneBunny
@@ -16,45 +14,46 @@ namespace OneBunny
 
         #endregion
 
-        private Vector2 playerMovement;
+        private Vector2 movement;
 
         public override void BeginState()
         {
             runnerEntity.SetAction(Player.ButtonActions.Jump, OnJump);
-            runnerEntity.OnMove = (x) => playerMovement = x;
+            runnerEntity.OnMove = (x) => movement = x;
 
-            runnerEntity.playerSkeletonAnimation.AnimationState.SetAnimation(0, "P_Move_Animation", true);
+            runnerEntity.skeletonAnimation.AnimationState.SetAnimation(0, runnerEntity.moveAnimationName, true);
         }
 
         public override void UpdateState()
         {
-            if (playerMovement == Vector2.zero)
+            if (movement == Vector2.zero)
             {
                 runnerEntity.ChangeState(Player.States.Idle);
             }
         }
 
-        public override void FixedUpdateState() 
+        public override void FixedUpdateState()
         {
 
             var velocity = Vector2.zero;
-            
-            velocity.x=playerMovement.x * runnerEntity.playerStatusData.moveSpeed;
-            velocity.y = runnerEntity.playerRigidbody.velocity.y;
 
-            runnerEntity.playerRigidbody.velocity = velocity;
+            velocity.x = movement.x * runnerEntity.statusData.moveSpeed;
+            velocity.y = runnerEntity.rigidbody.velocity.y;
 
-            runnerEntity.playerSkeletonAnimation.skeleton.ScaleX 
-                = playerMovement.x < 0 ? -1f : 1f;
+            runnerEntity.rigidbody.velocity = velocity;
+
+            runnerEntity.skeletonAnimation.skeleton.ScaleX
+                = movement.x < 0 ? -1f : 1f;
         }
 
         public override void ExitState()
         {
             runnerEntity.OnMove = null;
-            runnerEntity.playerRigidbody.velocity = Vector2.zero;
+            runnerEntity.rigidbody.velocity = Vector2.zero;
         }
 
-        private void OnJump(bool isOnJump){
+        private void OnJump(bool isOnJump)
+        {
             if (isOnJump)
             {
                 runnerEntity.ChangeState(Player.States.Jump);

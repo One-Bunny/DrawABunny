@@ -15,20 +15,20 @@ namespace OneBunny
 
         #endregion
 
-        private Vector2 playerMovement = Vector2.zero;
+        private Vector2 movement = Vector2.zero;
 
         public override void BeginState()
         {
             runnerEntity.SetAction(Player.ButtonActions.Jump, OnJump);
 
-            runnerEntity.OnMove = (x) => playerMovement = x;
+            runnerEntity.OnMove = (x) => movement = x;
 
-            runnerEntity.playerSkeletonAnimation.AnimationState.SetAnimation(0, "P_Default_Animastion", true);
+            runnerEntity.skeletonAnimation.AnimationState.SetAnimation(0, runnerEntity.idleAnimationName, true);
         }
 
         public override void UpdateState()
         {
-            if (playerMovement != Vector2.zero)
+            if (movement != Vector2.zero)
             {
                 runnerEntity.ChangeState(Player.States.Move);
             }

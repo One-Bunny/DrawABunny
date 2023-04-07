@@ -1,18 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Spine.Unity;
+using UnityEngine;
 
 namespace OneBunny
 {
     public partial class Player : FSMRunner<Player>, IFSMRunner
     {
-        [field:SerializeField] public Rigidbody2D playerRigidbody { get; private set;}
-        public PlayerStatusData playerStatusData;
+        [field: SerializeField] public Rigidbody2D rigidbody { get; private set; }
+        public PlayerStatusData statusData;
         public bool isGrounded { get; private set; }
-        private bool formerIsGrounded;
 
-        public SkeletonAnimation playerSkeletonAnimation;
+        public SkeletonAnimation skeletonAnimation;
         public enum States : int
         {
             Start,
@@ -26,6 +23,13 @@ namespace OneBunny
             End
         }
 
+        #region AnimationNames
+        public readonly string idleAnimationName = "P_Default_Animastion";
+        public readonly string moveAnimationName = "P_Move_Animation";
+        public readonly string jumpAnimationName = "p_Jump_animation";
+        public readonly string fallingAnimationName = "p_fall_animation";
+        #endregion
+
         private void Awake()
         {
             InitInputs();
@@ -37,11 +41,6 @@ namespace OneBunny
             base.Update();
 
             UpdateInputs();
-            if (formerIsGrounded != isGrounded)
-            {
-                Debug.Log(isGrounded);
-            }
-            formerIsGrounded = isGrounded;
         }
 
         protected override void FixedUpdate()
