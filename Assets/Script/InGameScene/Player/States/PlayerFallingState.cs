@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace OneBunny
@@ -16,6 +14,7 @@ namespace OneBunny
         #endregion
 
         private Vector2 movement;
+        private readonly string fallingAnimationName = "p_fall_animation";
 
         public override void BeginState()
         {
@@ -25,7 +24,7 @@ namespace OneBunny
             velocity.x = movement.x * runnerEntity.statusData.moveSpeed;
             velocity.y = runnerEntity.rigidbody.velocity.y;
             runnerEntity.rigidbody.velocity = velocity;
-            runnerEntity.skeletonAnimation.AnimationState.SetAnimation(0, runnerEntity.fallingAnimationName, false);
+            runnerEntity.skeletonAnimation.AnimationState.SetAnimation(0, fallingAnimationName, false);
         }
 
         public override void FixedUpdateState()
@@ -38,11 +37,11 @@ namespace OneBunny
             var velocity = Vector2.zero;
 
             velocity.x = movement.x * runnerEntity.statusData.moveSpeed;
-            velocity.y = runnerEntity.rigidbody.velocity.y*1.1f;
+            velocity.y = runnerEntity.rigidbody.velocity.y * 1.1f;
 
             runnerEntity.rigidbody.velocity = velocity;
 
-            runnerEntity.skeletonAnimation.skeleton.ScaleX 
+            runnerEntity.skeletonAnimation.skeleton.ScaleX
                 = movement.x < 0 ? -1f : 1f;
         }
 

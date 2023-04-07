@@ -15,7 +15,7 @@ namespace OneBunny
 
         private Vector2 _movement;
         private Vector2 velocity;
-
+        private readonly string jumpAnimationName = "p_Jump_animation";
         public override void BeginState()
         {
             runnerEntity.OnMove = (x) => _movement = x;
@@ -25,7 +25,7 @@ namespace OneBunny
             velocity.y = runnerEntity.statusData.jumpPower;
 
             runnerEntity.rigidbody.velocity = velocity;
-            runnerEntity.skeletonAnimation.AnimationState.SetAnimation(0, runnerEntity.jumpAnimationName, false);
+            runnerEntity.skeletonAnimation.AnimationState.SetAnimation(0, jumpAnimationName, false);
         }
 
         public override void FixedUpdateState()

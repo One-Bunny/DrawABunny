@@ -23,13 +23,6 @@ namespace OneBunny
             End
         }
 
-        #region AnimationNames
-        public readonly string idleAnimationName = "P_Default_Animastion";
-        public readonly string moveAnimationName = "P_Move_Animation";
-        public readonly string jumpAnimationName = "p_Jump_animation";
-        public readonly string fallingAnimationName = "p_fall_animation";
-        #endregion
-
         private void Awake()
         {
             InitInputs();

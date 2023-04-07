@@ -15,13 +15,14 @@ namespace OneBunny
         #endregion
 
         private Vector2 movement;
+        private readonly string moveAnimationName = "P_Move_Animation";
 
         public override void BeginState()
         {
             runnerEntity.SetAction(Player.ButtonActions.Jump, OnJump);
             runnerEntity.OnMove = (x) => movement = x;
 
-            runnerEntity.skeletonAnimation.AnimationState.SetAnimation(0, runnerEntity.moveAnimationName, true);
+            runnerEntity.skeletonAnimation.AnimationState.SetAnimation(0, moveAnimationName, true);
         }
 
         public override void UpdateState()

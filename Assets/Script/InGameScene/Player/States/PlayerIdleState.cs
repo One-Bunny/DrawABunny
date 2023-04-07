@@ -16,6 +16,7 @@ namespace OneBunny
         #endregion
 
         private Vector2 movement = Vector2.zero;
+        private readonly string idleAnimationName = "P_Default_Animastion";
 
         public override void BeginState()
         {
@@ -23,7 +24,7 @@ namespace OneBunny
 
             runnerEntity.OnMove = (x) => movement = x;
 
-            runnerEntity.skeletonAnimation.AnimationState.SetAnimation(0, runnerEntity.idleAnimationName, true);
+            runnerEntity.skeletonAnimation.AnimationState.SetAnimation(0, idleAnimationName, true);
         }
 
         public override void UpdateState()
