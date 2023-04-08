@@ -8,10 +8,9 @@ using UnityEngine;
 public class CSVConverter : MonoBehaviour
 {
     public List<TextAsset> csvFiles;
-    private string _jsonFilePath;
+    private string _filePath;
 
     private List<string> _jsons = new();
-    private List<string> _jsonNames = new();
 
     private void Start()
     {
@@ -27,9 +26,7 @@ public class CSVConverter : MonoBehaviour
     private void ConvertCSVToJson()
     {
         for (int i = 0; i < csvFiles.Count; i++)
-        {
-            _jsonFilePath = Application.dataPath + "/Data/JsonData/" + csvFiles[i].name + ".json";
-            _jsonNames.Add(csvFiles[i].name);
+        {           
             string[] csvData = csvFiles[i].text.Split(new[] { "\r\n", "\n" }, System.StringSplitOptions.None);
             string[] keys = csvData[0].Split(',');
 
@@ -54,7 +51,7 @@ public class CSVConverter : MonoBehaviour
             string json = JsonConvert.SerializeObject(records, Formatting.Indented);
             _jsons.Add(json);
 
-            File.WriteAllText(_jsonFilePath, json);
+            //File.WriteAllText(_jsonFilePath, json);
         }
     }
 
@@ -64,25 +61,27 @@ public class CSVConverter : MonoBehaviour
         for (int i = 0; i < _jsons.Count; i++)
         {
             string json = _jsons[i];
-            JsonData jsonData = new JsonData();
+            ConvertedData convertedData = new ConvertedData();
 
             JArray jArray = JArray.Parse(json);
 
             for (int j=0; j<jArray.Count; j++)
             {
                 JObject jObject = jArray[j] as JObject;
-                JsonDataEntity jsonDataEntity = new();
+                ConvertedDataEntity convertedDataEntity = new();
 
-                jsonDataEntity.index = (int)jObject["Index"];
-                jsonDataEntity.name = jObject["Name"].ToString();
-                jsonDataEntity.log = jObject["Log"].ToString();
+                convertedDataEntity.index = (int)jObject["Index"];
+                convertedDataEntity.name = jObject["Name"].ToString();
+                convertedDataEntity.log = jObject["Log"].ToString();
 
                 Debug.Log(jObject);
 
-                jsonData.entities.Add(jsonDataEntity);
+                convertedData.entities.Add(convertedDataEntity);
             }
 
-            AssetDatabase.CreateAsset(jsonData, "Assets/Data/ConvertedData/"+_jsonNames[i]+".asset");
+            _filePath = "Assets/Data/ConvertedData/" + csvFiles[i].name + ".asset";
+
+            AssetDatabase.CreateAsset(convertedData, _filePath);
             AssetDatabase.SaveAssets();
         }
     }
