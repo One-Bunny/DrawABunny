@@ -8,10 +8,10 @@ namespace OneBunny
     [Serializable]
     internal struct PoolData
     {
-        [field: SerializeField] public string Name { get; set; }
-        [field: SerializeField] public GameObject CopyObject { get; set; }
-        [field: SerializeField] public int Size { get; set; }
-        [field: SerializeField] public Transform Container { get; set; }
+        [field: SerializeField] public string Name { get; private set; }
+        [field: SerializeField] public GameObject CopyObject { get; private set; }
+        [field: SerializeField] public int Size { get; private set; }
+        [field: SerializeField] public Transform Container { get; private set; }
     }
 
     public class ObjectPoolManager : MonoBehaviour
