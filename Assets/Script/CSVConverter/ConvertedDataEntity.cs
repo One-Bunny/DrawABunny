@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ConvertedDataEntity
+public struct ConvertedDataEntity
 {
     public int index;
     public string name;

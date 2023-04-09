@@ -5,22 +5,50 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-public class CSVConverter : MonoBehaviour
+public class CSVConverter : EditorWindow
 {
+
     public List<TextAsset> csvFiles;
     private string _filePath;
 
     private List<string> _jsons = new();
 
-    private void Start()
-    {
-        if (csvFiles.Count == 0)
-        {
-            return;
-        }
+    private SerializedObject so;
 
-        ConvertCSVToJson();
-        JsonToScriptableObject();
+    [MenuItem("Window/CSVConverter")]
+    public static void Open()
+    {
+        GetWindow<CSVConverter>().titleContent = new GUIContent("CSVConverter");
+    }
+
+    private void OnEnable()
+    {
+        ScriptableObject target = this;
+        so = new(target);
+    }
+
+    private void OnGUI()
+    {
+        GUILayout.Label("---------------------------------\n\n" +
+            "Press Button [Convert] to Convert CSV files to Scriptable Object."
+            +"\n\n--------------------------------\n");
+
+        so.Update();
+        SerializedProperty sp = so.FindProperty("csvFiles");
+
+        EditorGUILayout.PropertyField(sp, true);
+        so.ApplyModifiedProperties();
+
+        if (GUILayout.Button("Convert"))
+        {
+            if (csvFiles.Count == 0)
+            {
+                return;
+            }
+
+            ConvertCSVToJson();
+            JsonToScriptableObject();
+        }
     }
 
     private void ConvertCSVToJson()
@@ -50,8 +78,6 @@ public class CSVConverter : MonoBehaviour
 
             string json = JsonConvert.SerializeObject(records, Formatting.Indented);
             _jsons.Add(json);
-
-            //File.WriteAllText(_jsonFilePath, json);
         }
     }
 
