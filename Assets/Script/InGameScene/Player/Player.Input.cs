@@ -12,7 +12,7 @@ public partial class Player
 {
     public enum ButtonActions // bool 값으로 입력받는 액션
     {
-
+        Jump
     }
 
     public UnityAction<Vector2> OnMove { get; set; }
@@ -32,13 +32,13 @@ public partial class Player
         inputActions = new global::PlayerInputData();
         
         moveInputAction = inputActions.Player.Move;
-        
-        //buttonActions.Add(ButtonActions.Jump, inputActions.Player.Jump);
-        //inputActions.Player.Jump.started += (x) => GetAction(ButtonActions.Jump)?.Invoke(true);
-        //inputActions.Player.Jump.canceled += (x) => GetAction(ButtonActions.Jump)?.Invoke(false);
-    }
 
-    private void UpdateInputs()
+            buttonActions.Add(ButtonActions.Jump, inputActions.Player.Jump);
+            inputActions.Player.Jump.started += (x) => GetAction(ButtonActions.Jump)?.Invoke(true);
+            inputActions.Player.Jump.canceled += (x) => GetAction(ButtonActions.Jump)?.Invoke(false);
+        }
+
+        private void UpdateInputs()
     {
         var moveInput = moveInputAction.ReadValue<Vector2>();
         OnMove?.Invoke(moveInput);

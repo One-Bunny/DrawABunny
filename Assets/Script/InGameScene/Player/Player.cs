@@ -1,11 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+using Spine.Unity;
 using UnityEngine;
 
 namespace OneBunny
 {
     public partial class Player : FSMRunner<Player>, IFSMRunner
     {
+        [field: SerializeField] public Rigidbody2D rigidbody { get; private set; }
+        public PlayerStatusData statusData;
+        public bool isGrounded { get; private set; }
+
+        public SkeletonAnimation skeletonAnimation;
         public enum States : int
         {
             Start,
@@ -37,5 +41,17 @@ namespace OneBunny
             base.FixedUpdate();
         }
 
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.contacts[0].normal.y > 0.7f)
+            {
+                isGrounded = true;
+            }
+        }
+
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+            isGrounded = false;
+        }
     }
 }
