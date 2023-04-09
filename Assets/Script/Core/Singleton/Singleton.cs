@@ -1,14 +1,16 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 
 namespace OneBunny
 {
-    public abstract class Singleton : MonoBehaviour
+    public class Singleton : MonoBehaviour
     {
         private static Singleton _instance = null;
         private static object _lock = new object();
         private static bool _applicationQuit = false;
 
+        public ObjectPoolManager poolManager;
         public static Singleton Instance
         {
             get
@@ -46,12 +48,12 @@ namespace OneBunny
             }
         }
 
-        protected virtual void OnApplicationQuit()
+        protected void OnApplicationQuit()
         {
             _applicationQuit = true;
         }
 
-        public virtual void OnDestroy()
+        public void OnDestroy()
         {
             _applicationQuit = true;
         }
