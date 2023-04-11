@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IInteractionAction
+namespace OneBunny
 {
-    public void GetAction()
+    public interface IInteractionAction
     {
+        void GetAction()
+        {
 
+        }
     }
 }

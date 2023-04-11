@@ -1,44 +1,56 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 namespace OneBunny
 {
-    public class NPCController : MonoBehaviour, IVIsibleObject, IInteractionAction
+    public class NPCController : MonoBehaviour
     {
-        [field: SerializeField] public GameObject _textUI;
+        [field: SerializeField] private VisibleObject visibleObject;
+        [field: SerializeField] private ChatSystem chatSystem;
+
+        
+        [SerializeField] private GameObject _player = null;
 
         private void Awake()
         {
-            if(_textUI == null)
+            if (visibleObject is null)
             {
-                Debug.Log($"{_textUI.GetType()}이 존재하지 않습니다.");
+                NPCLog($"{visibleObject.GetType()}가 존재하지 않습니다.");
+            }
+
+            if (chatSystem is null)
+            {
+                NPCLog($"{chatSystem.GetType()}가 존재하지 않습니다.");
+            }
+
+            if (_player is not null)
+            {
+                _player = null;
+
+                visibleObject.OnSetViewer.AddListener(SetPlayer);
+                visibleObject.OnClear.AddListener(ClearPlayer);
             }
         }
 
-        private void OnText(bool isOn)
+        private void SetPlayer(GameObject player)
         {
-            _textUI.SetActive(isOn);
+            _player = player;
         }
 
-
-        #region Interface
-
-        public void OnObject(bool isOn)
+        private void ClearPlayer()
         {
-            OnText(isOn);
+            _player = null;
         }
 
-        public void GetAction()
+        #region Log
+        private void NPCLog(string text)
         {
-            // Get Action을 통해서
-            // Player <-> NPC 간 대화라던지, Action 행위 지정.
-
-            // Player에서 E Key에 GetAction Bind를 지정.
+            Debug.Log($"[NPC LOGGER] {GetType()} : {text}");
         }
-
-
         #endregion
     }
 }

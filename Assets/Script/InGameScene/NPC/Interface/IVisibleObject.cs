@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IVIsibleObject
+namespace OneBunny
 {
-    public void OnObject(bool isOn)
+    public interface IVisibleObject
     {
+        void OnObject(bool isOn)
+        {
 
+        }
     }
 }
