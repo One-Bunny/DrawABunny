@@ -2,18 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-
 
 namespace OneBunny
 {
-    public class NPCController : MonoBehaviour
+    public class NPCController : MonoBehaviour, IInteractionAction
     {
         [field: SerializeField] private VisibleObject visibleObject;
         [field: SerializeField] private ChatSystem chatSystem;
 
         
-        [SerializeField] private GameObject _player = null;
+        [SerializeField] private GameObject _target = null;
+
+        [SerializeField] private InteractionInformation interactInfo;
 
         private void Awake()
         {
@@ -27,23 +27,23 @@ namespace OneBunny
                 NPCLog($"{chatSystem.GetType()}가 존재하지 않습니다.");
             }
 
-            if (_player is not null)
+            if (_target is not null)
             {
-                _player = null;
+                _target = null;
 
-                visibleObject.OnSetViewer.AddListener(SetPlayer);
-                visibleObject.OnClear.AddListener(ClearPlayer);
+                visibleObject.OnSetViewer.AddListener(SetTarget);
+                visibleObject.OnClear.AddListener(ClearTarget);
             }
         }
 
-        private void SetPlayer(GameObject player)
+        private void SetTarget(GameObject target)
         {
-            _player = player;
+            _target = target;
         }
 
-        private void ClearPlayer()
+        private void ClearTarget()
         {
-            _player = null;
+            _target = null;
         }
 
         #region Log

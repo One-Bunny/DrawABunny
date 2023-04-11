@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 211210644}
   - component: {fileID: 211210643}
   - component: {fileID: 211210642}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: TextCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -422,7 +422,7 @@ GameObject:
   - component: {fileID: 960967596}
   - component: {fileID: 960967598}
   - component: {fileID: 960967597}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: TestImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -984,9 +984,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2058874112}
   - component: {fileID: 2058874114}
-  - component: {fileID: 2058874113}
   - component: {fileID: 2058874115}
-  m_Layer: 6
+  - component: {fileID: 2058874113}
+  - component: {fileID: 2058874117}
+  - component: {fileID: 2058874116}
+  m_Layer: 3
   m_Name: NPC
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1021,7 +1023,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e438a6eebdc4d254b87abc7c8a38bc1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textUI: {fileID: 211210640}
+  visibleObject: {fileID: 2058874117}
+  chatSystem: {fileID: 2058874116}
+  _target: {fileID: 0}
 --- !u!212 &2058874114
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1100,3 +1104,34 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2058874116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058874111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0bf8877d937cb54394caa9cb2ffc6bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2058874117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058874111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3016b48e14d4d347bc977ce58fa3e38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <visibleObject>k__BackingField: {fileID: 211210640}
+  OnSetViewer:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClear:
+    m_PersistentCalls:
+      m_Calls: []
