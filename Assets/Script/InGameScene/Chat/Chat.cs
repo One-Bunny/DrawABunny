@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class Chat : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    // Data -> ScriptableObject
+    
+    // 현재 Chat이 완료되었는지? -> IS Done
+    public bool IsDone()
     {
-        
+        return DoneCheck();
     }
 
-    // Update is called once per frame
-    void Update()
+    private bool DoneCheck()
     {
-        
+        return true;
+    }
+    
+    // 현재 Chat이 진행중인지? -> IS Playing
+    public bool IsPlaying()
+    {
+        return false;
+    }
+    
+    // Chat을 출력하는 것. -> Typing Effect
+    public string Print()
+    {
+        // While
+        return "TEST";
     }
 }
